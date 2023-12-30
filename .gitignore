@@ -1,0 +1,6 @@
+adventOfCode2023.sln
+.vscode/*
+AdventOfCode2023.Tests/obj/*
+AdventOfCode2023.Tests/TestResults/*
+.DS_Store
+AdventOfCode2023/obj/*
