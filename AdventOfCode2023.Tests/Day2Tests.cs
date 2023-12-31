@@ -11,7 +11,7 @@ namespace AOC2023.Tests
 			Day2A day2A = new Day2A();
 
 			// Act
-			List<string> results = day2A.getGameResultStrings("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green");
+			List<string> results = Day2A.getGameResultStrings("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green");
 
 			// Assert
 			Assert.AreEqual(3, results.Count);
@@ -132,23 +132,26 @@ namespace AOC2023.Tests
 			Assert.AreEqual("8", day2A.calculateTest());
 		}
 
-		// [TestMethod]
-		// public void TestDay2AC()
-		// {
-		// 	// Arrange
+		[TestMethod]
+		public void TestDay2BCalculatesMinimumNumberOfColors()
+		{
+			string gameString = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green";
 
+			List<Dictionary<string, int>> gameResultSet = Day2B.GetGameResults(gameString);
+			Dictionary<string, int> minimumNumberOfColorsRequiredForGame = Day2B.GetMinimumNumberOfColorsRequired(gameResultSet);
+			Assert.AreEqual(4, minimumNumberOfColorsRequiredForGame["red"]);
+			Assert.AreEqual(2, minimumNumberOfColorsRequiredForGame["green"]);
+			Assert.AreEqual(6, minimumNumberOfColorsRequiredForGame["blue"]);
+		}
 
-		// 	string Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
-		// 	Day2A day2A = new Day2A();
+		[TestMethod]
+		public void TestDay2BCalculatesProductOfColors()
+		{
+			string gameString = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green";
 
-		// 	// Act
-		// 	List<string> results = day2A.getGameResults("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green");
+			List<Dictionary<string, int>> gameResultSet = Day2B.GetGameResults(gameString);
+			Assert.AreEqual(48, Day2B.calculateProductOfColorNumbers(gameResultSet));
 
-		// 	// Assert
-		// 	Assert.AreEqual(3, results.Count);
-		// 	Assert.AreEqual("3 blue, 4 red", results[0]);
-		// 	Assert.AreEqual("1 red, 2 green, 6 blue", results[1]);
-		// 	Assert.AreEqual("2 green", results[2]);
-		// }
+		}
 	}
 }

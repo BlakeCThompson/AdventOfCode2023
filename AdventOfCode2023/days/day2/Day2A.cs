@@ -14,7 +14,7 @@ namespace AOC2023
 		public Day2A() : base(testFileName, fullPuzzleFileName)
 		{
 		}
-		private int ParseGameNumber(string gameLine)
+		protected static int ParseGameNumber(string gameLine)
 		{
 			Regex regex = new Regex(@"Game (\d+):");
 			Match match = regex.Match(gameLine);
@@ -39,7 +39,7 @@ namespace AOC2023
 		/// </summary>
 		/// <param name="gameLine">The gameLine, which is assumed to take the format described in the summary.</param>
 		/// <returns>The sum of the two integers.</returns>
-		public List<string> getGameResultStrings(string gameLine)
+		public static List<string> getGameResultStrings(string gameLine)
 		{
 			List<string> resultList = new List<string>();
 
@@ -94,9 +94,9 @@ namespace AOC2023
 		return numberColorPairs;
 	}
 
-	public List<Dictionary<string, int>> GetGameResults(string gameLine)
+	public static List<Dictionary<string, int>> GetGameResults(string gameLine)
 	{
-		List<string> gameResultStrings = getGameResultStrings(gameLine);
+		List<string> gameResultStrings = Day2A.getGameResultStrings(gameLine);
         List<Dictionary<string, int>> gameResultDict = new List<Dictionary<string, int>>();
 		foreach (string gameResultString in gameResultStrings)
 		{
@@ -152,11 +152,10 @@ namespace AOC2023
 			int sumOfPossibleGames = 0;
 			while (gameLine != null)
 			{
-				List<Dictionary<string, int>> gameResults = this.GetGameResults(gameLine);
-				int gameNumber = this.ParseGameNumber(gameLine);
+				List<Dictionary<string, int>> gameResults = Day2A.GetGameResults(gameLine);
 				if (this.gameIsPossible(gameResults))
 				{
-					sumOfPossibleGames += this.ParseGameNumber(gameLine);
+					sumOfPossibleGames += Day2A.ParseGameNumber(gameLine);
 				}
 				gameLine = fr.GetLine();
 			}
