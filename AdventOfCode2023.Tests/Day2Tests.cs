@@ -151,7 +151,6 @@ namespace AOC2023.Tests
 
 			List<Dictionary<string, int>> gameResultSet = Day2B.GetGameResults(gameString);
 			Assert.AreEqual(48, Day2B.calculateProductOfColorNumbers(gameResultSet));
-
 		}
 	}
 }
