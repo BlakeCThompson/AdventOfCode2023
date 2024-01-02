@@ -90,10 +90,31 @@ namespace AOC2023.Tests
 			*/
 			string fileName = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + "../../../days/day3/test.txt");
 			AdventOfCodeFileReader aOCFR= new AdventOfCodeFileReader(fileName);
-			List<DataLocation> numbers =  Day3A.GetDataLocations(aOCFR, (c)=>!char.IsDigit(c));
+			List<DataLocation> numbers =  Day3A.GetDataLocations(aOCFR, (c)=>char.IsDigit(c));
 			List<DataLocation> symbols = Day3A.GetDataLocations(aOCFR, (c)=>!char.IsLetterOrDigit(c) && c != '.');
-			HashSet<DataLocation> numbersAdjacentToSymbols = Day3A.GetAdjacent(numbers, symbols);
+			HashSet<DataLocation> numbersAdjacentToSymbols = Day3A.GetAdjacent(symbols, numbers);
 			Assert.AreEqual(8, numbersAdjacentToSymbols.Count);
+		}
+
+		[TestMethod]
+		public void TestDay3B()
+		{
+			/*
+			test.txt:
+467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..
+			*/
+			string fileName = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + "../../../days/day3/test.txt");
+			AdventOfCodeFileReader aOCFR= new AdventOfCodeFileReader(fileName);
+			Assert.AreEqual("467835", Day3B.CalculateSumOfGearRatios(aOCFR));
 		}
 	}
 }

@@ -11,6 +11,7 @@ namespace AOC2023
 
 		public static List<DataLocation> GetDataLocations(AdventOfCodeFileReader fr, Func<char, bool> comparator)
 		{
+			fr.ResetStreamToBeginning();
 			List<DataLocation> dataLocations = new List<DataLocation>();
 			string line = "";
 			int rowIndex = 0;
@@ -68,17 +69,31 @@ namespace AOC2023
 			return locationsAdjacentToTargets;
 		}
 
+		public static int getSumOfDataLocationStrings(HashSet<DataLocation> dataLocations)
+		{
+			int sum = 0;
+			foreach (var d in dataLocations)
+			{
+				sum += int.Parse(d.Value);
+			}
+			return sum;
+		}
 
 
 		public override string calculateTest()
 		{
-			List<DataLocation> numbers = Day3A.GetDataLocations(this.testPuzzleFileReader, (c)=>char.IsDigit(c));
-			return "";
+			List<DataLocation> numbers =  Day3A.GetDataLocations(this.testPuzzleFileReader, (c)=>char.IsDigit(c));
+			List<DataLocation> symbols = Day3A.GetDataLocations(this.testPuzzleFileReader, (c)=>!char.IsLetterOrDigit(c) && c != '.');
+			HashSet<DataLocation> adjacentNumbers = Day3A.GetAdjacent(symbols, numbers);
+			return getSumOfDataLocationStrings(adjacentNumbers).ToString();
 		}
 
 		public override string calculateFullPuzzle()
 		{
-			return "";
+			List<DataLocation> numbers =  Day3A.GetDataLocations(this.fullPuzzleFileReader, (c)=>char.IsDigit(c));
+			List<DataLocation> symbols = Day3A.GetDataLocations(this.fullPuzzleFileReader, (c)=>!char.IsLetterOrDigit(c) && c != '.');
+			HashSet<DataLocation> adjacentNumbers = Day3A.GetAdjacent(symbols, numbers);
+			return getSumOfDataLocationStrings(adjacentNumbers).ToString();
 		}
 	}
 }

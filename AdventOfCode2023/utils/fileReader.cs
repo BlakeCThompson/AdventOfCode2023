@@ -24,7 +24,11 @@ namespace AOC2023
 			return AppDomain.CurrentDomain.BaseDirectory + "../../../";
 		}
 
-
+		public void ResetStreamToBeginning()
+		{
+			this.streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
+			this.streamReader.DiscardBufferedData();
+		}
 
 		// <summary>
 		// PLEASE NOTE:
