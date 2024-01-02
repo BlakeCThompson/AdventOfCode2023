@@ -9,20 +9,23 @@ namespace AOC2023
 		public Day3A() : base(testFileName, fullPuzzleFileName)
 		{}
 
-		public static List<DataLocation> getNumberLocations(AdventOfCodeFileReader fr)
+		public static List<DataLocation> GetDataLocations(AdventOfCodeFileReader fr, Func<char, bool> comparator)
 		{
-			List<DataLocation> numbers = new List<DataLocation>();
+			List<DataLocation> dataLocations = new List<DataLocation>();
 			string line = "";
 			int rowIndex = 0;
 			while((line = fr.GetLine()) != null)
 			{
-				List<DataLocation> newNumbers = Day3A.ParseNumberDataLocationsFromLine(line, rowIndex);
-				numbers = numbers.Concat(newNumbers).ToList();
+				List<DataLocation> newDataLocations = Day3A.ParseDataLocationsFromLine(line, rowIndex, comparator);
+				dataLocations = dataLocations.Concat(newDataLocations).ToList();
 				rowIndex++;
 			}
-			return numbers;
+			return dataLocations;
 		}
-		public static List<DataLocation> ParseNumberDataLocationsFromLine(string line, int row)
+		/// <summary>
+		/// searches a string and returns a DataLocation signalling where substrings matching a comparator function
+		/// </summary>
+		public static List<DataLocation> ParseDataLocationsFromLine(string line, int row, Func<char, bool> comparator)
 		{
 			List<DataLocation> numbersInLine = new List<DataLocation>();
 			int lineIndex = 0;
@@ -31,7 +34,7 @@ namespace AOC2023
 				int beginCol = lineIndex;
 				int? endCol = null;
 				string number = "";
-				while (char.IsDigit(line[lineIndex]) && lineIndex < line.Length)
+				while (lineIndex < line.Length && comparator(line[lineIndex]))
 				{
 					number += line[lineIndex];
 					endCol = lineIndex;
@@ -40,15 +43,36 @@ namespace AOC2023
 				if (endCol.HasValue)
 				{
 					int realEndCol = endCol.Value;
-					numbersInLine.Add(new DataLocation(row, beginCol, row, realEndCol, number));
+					numbersInLine.Add(new DataLocation(row, beginCol, realEndCol, number));
 				}
 				lineIndex++;
 			}
 			return numbersInLine;
 		}
+	/// <summary>
+	/// take a list of DataLocations, and compare it with a second list of data locations to find any in the second list that may be adjacent to the first.
+	/// </summary>
+		public static HashSet<DataLocation> GetAdjacent(List<DataLocation> targetLocations, List<DataLocation> possiblyAdjacentLocations)
+		{
+			HashSet<DataLocation> locationsAdjacentToTargets = new HashSet<DataLocation>();
+			foreach (DataLocation possiblyAdjacentLocation in possiblyAdjacentLocations)
+			{
+				foreach(DataLocation targetLocation in targetLocations)
+				{
+					if(targetLocation.IsAdjacent(possiblyAdjacentLocation))
+					{
+						locationsAdjacentToTargets.Add(possiblyAdjacentLocation);
+					}
+				}
+			}
+			return locationsAdjacentToTargets;
+		}
+
+
+
 		public override string calculateTest()
 		{
-			List<DataLocation> numbers = Day3A.getNumberLocations(this.testPuzzleFileReader);
+			List<DataLocation> numbers = Day3A.GetDataLocations(this.testPuzzleFileReader, (c)=>char.IsDigit(c));
 			return "";
 		}
 
