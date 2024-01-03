@@ -6,9 +6,10 @@ namespace AOC2023.Tests
 	{
 
 		[TestMethod]
-		public void TestDay4AGetWinningNumbersFromGivenLine()
+		public void TestDay4BGetNumberOfCards()
 		{
-			
+			Day4B day4B = new Day4B();
+			Assert.AreEqual(day4B.calculateTest(), "30");
 		}
 	}
 }

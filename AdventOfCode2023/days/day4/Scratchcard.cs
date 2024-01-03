@@ -7,14 +7,19 @@ namespace AOC2023
 		public int CardNumber { get; init; }
 		public List<int> WinningNumbers { get; init; }
 		public List<int> GivenNumbers { get; init; }
+		/// <summary>
+		/// the total number of copies of other scratchcards that this scratchcard wins.
+		/// </summary>
+		public int NumberOfCopiesThisCardWins {get; set;}
 		public Scratchcard(int cardNumber, List<int> winningNumbers, List<int> givenNumbers)
 		{
 			CardNumber = cardNumber;
 			WinningNumbers = winningNumbers;
 			GivenNumbers = givenNumbers;
+			NumberOfCopiesThisCardWins = 0;
 		}
 		///<summary>
-		///takes in a scratchard line in the format of
+		///takes in a scratchcard line in the format of
 		/// "Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53"
 		/// and returns a ScratchCard object.
 		///</summary>
